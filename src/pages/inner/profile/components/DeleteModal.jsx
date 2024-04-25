@@ -6,9 +6,12 @@ import InputField from '../../../../components/ui/InputField';
 import Modal from '../../../../components/ui/Modal';
 import Alert from '../../../../components/ui/Alert';
 import icons from '../../../../utils/faIcons';
+import useLogout from '../../../../hooks/useLogout';
 
 function DeleteModal({ setDeletePopupOpen }) {
   const privateAxios = usePrivateAxios();
+
+  const logout = useLogout();
 
   const [password, setPassword] = useState('');
 
@@ -20,7 +23,8 @@ function DeleteModal({ setDeletePopupOpen }) {
     setLoading(true);
     try {
       await privateAxios({ method: 'DELETE', url: '/UserProfile/delete-my-account', data: { password } });
-      // logout
+      setLoading(false);
+      setTimeout(() => logout(), 3500);
     } catch (error) {
       setLoading(false);
       setError((error.response?.data?.errors && error.response.data.errors[0]) || globalErrorMessage);

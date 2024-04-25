@@ -6,6 +6,8 @@ import useAuth from '../../../../../../hooks/useAuth';
 import InputField from '../../../../../../components/ui/InputField';
 import Alert from '../../../../../../components/ui/Alert';
 import Form from '../../../../../../components/ui/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import icons from '../../../../../../utils/faIcons';
 
 export default function ChangingEmail() {
   const privateAxios = usePrivateAxios();
@@ -70,35 +72,67 @@ export default function ChangingEmail() {
   }
 
   return verify ? (
-    <Form
-      onSubmit={handleVerfiySubmit}
-      loading={loading}
-      error={error}
-      submitLabel="Verify"
-      submitDisabled={!(code.length === 6) || loading}
-      className="w-full sm:w-[400px] sm:mx-auto"
-    >
+
+    <div className="flex gap-20">
+    <div className="flex lg:w-[400px]">
+      <UserData icon={icons.email} title="Email" />
+      <div className='ml-20 lg:w-[270px]'>
       <InputField
-        className="text-center text-lg font-semibold placeholder:font-normal"
-        type="text"
-        value={code}
-        placeholder="Verification Code"
-        onChange={(e) => setCode(e.target.value)}
-        maxLength={6}
-        required
-        autoFocus
-      />
-    </Form>
-  ) : (
+      className="text-center text-lg font-semibold placeholder:font-normal"
+      type="text"
+      value={code}
+      placeholder="Verification Code"
+      onChange={(e) => setCode(e.target.value)}
+      maxLength={6}
+      required
+      autoFocus
+    />      </div>
+    </div>
+    <div className='flex w-[75px] '>
     <Form
-      onSubmit={handleEmailSubmit}
-      loading={loading}
-      error={error}
-      submitLabel="Update"
-      submitDisabled={!isValidEmail || !email || loading}
-      className="w-full sm:w-[400px] sm:mx-auto"
-    >
-      <InputField.Email value={email} onChange={(e) => setEmail(e.target.value)} isValid={isValidEmail} required />{' '}
-    </Form>
+    onSubmit={handleVerfiySubmit}
+    loading={loading}
+    error={error}
+    submitLabel="Verify"
+    submitDisabled={!(code.length === 6) || loading}
+    className="w-full sm:mx-auto sm:w-[400px]"
+  >
+   
+  </Form>
+    </div>
+
+  </div>
+   
+  ) : (
+    <div className="flex  lg:gap-20">
+      <div className="flex lg:w-[400px]">
+        <UserData icon={icons.email} title="Email" />
+        <div className='lg:ml-20 lg:w-[270px] w-[270px] ml-3'>
+          <InputField.Email value={email} onChange={(e) => setEmail(e.target.value)} isValid={isValidEmail} required />{' '}
+        </div>
+      </div>
+      <div className='flex lg:w-[75px] w-[120px] '>
+        <Form
+          onSubmit={handleEmailSubmit}
+          loading={loading}
+          error={error}
+          submitLabel="Update"
+          submitDisabled={!isValidEmail || !email || loading}
+          className=" sm:mx-auto sm:w-[400px]"
+        ></Form>
+      </div>
+    </div>
+  );
+}
+
+function UserData({ icon, title, value }) {
+  return (
+    <div className="flex justify-between">
+      <div className="flex items-center gap-2">
+        <FontAwesomeIcon icon={icon} />
+        <p>{title}</p>
+      </div>
+      <div className="text-gray-800">{value}</div>
+    </div>
   );
 }

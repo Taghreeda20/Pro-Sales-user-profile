@@ -5,6 +5,8 @@ import usePrivateAxios from '../../../../../../hooks/usePrivateAxios';
 import useAuth from '../../../../../../hooks/useAuth';
 import InputField from '../../../../../../components/ui/InputField';
 import Form from '../../../../../../components/ui/Form';
+import icons from '../../../../../../utils/faIcons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function ChangingName() {
   const privateAxios = usePrivateAxios();
@@ -48,29 +50,53 @@ export default function ChangingName() {
   }
 
   return (
-    <Form
+    <div className="flex lg:gap-20 gap-1">
+      <div>
+        <div className="flex  lg:mb-4 lg:w-[400px] mb-2">
+          <UserData icon={icons.user} title="First Name" />
+          <div className="lg:ml-32 lg:w-[170px] ml-4 w-[160px]">
+            <InputField.FirstName
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              isValid={isValidFirstName}
+              required
+            />
+          </div>
+        </div>
+        <div className="flex  lg:w-[400px] ">
+          <UserData icon={icons.user} title="Last Name" />{' '}
+          <div className="lg:ml-32 lg:w-[170px] ml-4 w-[160px]">
+            <InputField.LastName
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              isValid={isValidLastName}
+              required
+            />
+          </div>
+        </div>
+      </div>
+        <div className="flex lg:w-[75px] w-[80px]">
+          <Form
+            onSubmit={handleNameSubmit}
+            loading={loading}
+            error={error}
+            submitLabel="Update"
+            submitDisabled={!isValidFirstName || !isValidLastName || loading}
+            className="w-full sm:mx-auto sm:w-[400px]"
+          ></Form>
+        </div>
+    </div>
+  );
+}
 
-      onSubmit={handleNameSubmit}
-      loading={loading}
-      error={error}
-      submitLabel="Update"
-      submitDisabled={!isValidFirstName || !isValidLastName || loading}
-      className="w-full sm:w-[400px] sm:mx-auto"
-    >
-
-      <InputField.FirstName
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        isValid={isValidFirstName}
-        required
-      />
-
-      <InputField.LastName
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        isValid={isValidLastName}
-        required
-      />
-    </Form>
+function UserData({ icon, title, value }) {
+  return (
+    <div className="flex justify-between">
+      <div className="flex items-center gap-2">
+        <FontAwesomeIcon icon={icon} />
+        <p>{title}</p>
+      </div>
+      <div className="text-gray-800">{value}</div>
+    </div>
   );
 }

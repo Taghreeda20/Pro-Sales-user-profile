@@ -5,6 +5,8 @@ import usePrivateAxios from '../../../../../../hooks/usePrivateAxios';
 import useAuth from '../../../../../../hooks/useAuth';
 import InputField from '../../../../../../components/ui/InputField';
 import Form from '../../../../../../components/ui/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import icons from '../../../../../../utils/faIcons';
 
 export default function ChangingUsername() {
   const privateAxios = usePrivateAxios();
@@ -46,20 +48,40 @@ export default function ChangingUsername() {
   }
 
   return (
-    <Form
-      onSubmit={handleUsernameSubmit}
-      loading={loading}
-      error={error}
-      submitLabel="Update"
-      submitDisabled={!isValidUsername || !username || loading}
-      className="w-full sm:w-[400px] sm:mx-auto"
-    >
-        <InputField.Username
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          isValid={isValidUsername}
-          required
-        />
-    </Form>
+    <div className="flex lg:gap-20 gap-1">
+      <div className="flex lg:w-[400px]">
+        <UserData icon={icons.username} title="Username" />
+        <div className="lg:ml-32 lg:w-[170px] w-[160px] ml-4">
+          <InputField.Username
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            isValid={isValidUsername}
+            required
+          />{' '}
+        </div>
+      </div>
+      <div className="flex lg:w-[75px] w-[80px] ">
+        <Form
+          onSubmit={handleUsernameSubmit}
+          loading={loading}
+          error={error}
+          submitLabel="Update"
+          submitDisabled={!isValidUsername || !username || loading}
+          className="w-full flex  sm:mx-auto sm:w-[400px]"
+        ></Form>
+      </div>
+    </div>
+  );
+}
+
+function UserData({ icon, title, value }) {
+  return (
+    <div className="flex justify-between">
+      <div className="flex items-center gap-2">
+        <FontAwesomeIcon icon={icon} />
+        <p>{title}</p>
+      </div>
+      <div className="text-gray-800">{value}</div>
+    </div>
   );
 }

@@ -8,22 +8,24 @@ import ChangingEmail from './components/ChangingEmail';
 import icons from '../../../../../utils/faIcons';
 import DeleteModal from '../../components/DeleteModal';
 
-
 export default function BasicInfoPage() {
   useDocumentTitle('Profile Basic Info');
 
   const { auth } = useAuth();
 
-  const [edit, setEdit] = useState(false);
+  const [editName, setEditname] = useState(false);
+  const [editUserName, setEditUsername] = useState(false);
+  const [editEmail, setEditEmail] = useState(false);
+
   const [isMobile, setIsMobile] = useState(false);
   const [deletePopupOpen, setDeletePopupOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 640); // Adjust the breakpoint as needed
+      setIsMobile(window.innerWidth <= 640);
     };
 
-    handleResize(); // Check on initial load
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -31,50 +33,122 @@ export default function BasicInfoPage() {
   }, []);
 
   return (
-    <div >
-      <h1 className="mb-5 lg:mb-12 text-2xl font-bold">Profile</h1>
+    <div>
+      <h1 className="mb-5 text-2xl font-bold lg:mb-12">Profile</h1>
+
       <div>
-        {edit ? (
-          <div className="flex flex-col lg:gap-12 gap-1 lg:w-[500px]">
-            <ChangingName />
-            <ChangingUsername />
-            <ChangingEmail />
-            <button
-              className="btn-light flex flex-center items-center gap-2 rounded-xl px-4 py-3 w-fit "
-              onClick={() => setEdit(!edit)}
-            >
-              <FontAwesomeIcon icon={icons.back} />
-              Back
-            </button>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-8 lg:w-[500px] lg:gap-20">
-            <UserData icon={icons.user} title="First Name" value={auth.firstName} />
-            <UserData icon={icons.user} title="Last Name" value={auth.lastName} />
-            <UserData icon={icons.username} title="Username" value={auth.username} />
-            <UserData icon={icons.email} title="Email" value={auth.email} />
-            <button
-              onClick={() => setEdit(!edit)}
-              className="btn-primary mt-8  flex-center flex items-center gap-1 sm:text-base rounded-xl py-2 text-sm font-semibold"
-            >
-              <FontAwesomeIcon icon={icons.edit} />
-              Edit
-            </button>
-            {isMobile && (
+        <div>
+          {editName ? (
+            <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
+              <ChangingName />
               <button
-                className=" flex w-full items-center mt-5 gap-2 rounded-xl p-4 text-red-500 transition-colors hover:bg-red-50"
-                onClick={() => setDeletePopupOpen(true)}
+                className="btn-light flex-center flex w-fit items-center gap-2 rounded-xl lg:px-3 lg:py-1 "
+                onClick={() => setEditname(!editName)}
               >
-                <FontAwesomeIcon icon={icons.trash} />
-                Delete your Account
+                <FontAwesomeIcon icon={icons.back} />
+                Back
               </button>
-            )}
-            <style>
-            {`.active { color: #7050FF; }`}
-          </style>
-          {deletePopupOpen && <DeleteModal setDeletePopupOpen={setDeletePopupOpen} />}
-          </div>
+            </div>
+          ) : (
+            <div className="flex gap-8 lg:gap-20">
+              <div className=" w-[220px] lg:w-[400px]">
+                <div className="mb-3 lg:mb-4">
+                  <UserData icon={icons.user} title="First Name" value={auth.firstName} />
+                </div>
+                <div>
+                  {' '}
+                  <UserData icon={icons.user} title="Last Name" value={auth.lastName} />{' '}
+                </div>
+              </div>
+              <div className="flex">
+                <button
+                  onClick={() => setEditname(!editName)}
+                  className="btn-primary flex-center flex w-[70px] items-center gap-1 rounded-xl py-1 text-sm font-semibold sm:text-base"
+                >
+                  <FontAwesomeIcon icon={icons.editName} />
+                  Edit
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-5">
+          {editUserName ? (
+            <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
+              <ChangingUsername />
+              <button
+                className="btn-light flex-center flex w-fit items-center gap-2 rounded-xl lg:px-3 lg:py-1"
+                onClick={() => setEditUsername(!editUserName)}
+              >
+                <FontAwesomeIcon icon={icons.back} />
+                Back
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-8 lg:gap-20">
+              {' '}
+              <div className=" w-[220px] lg:w-[400px]">
+                <UserData icon={icons.username} title="Username" value={auth.username} />
+              </div>
+              <div>
+                <button
+                  onClick={() => setEditUsername(!editUserName)}
+                  className="btn-primary flex-center flex w-[70px] items-center gap-1 rounded-xl py-1 text-sm font-semibold sm:text-base"
+                >
+                  <FontAwesomeIcon icon={icons.editUserName} />
+                  Edit
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-5">
+          {editEmail ? (
+            <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
+              <ChangingEmail />
+              <button
+                className="btn-light flex-center flex w-fit items-center gap-2 rounded-xl px-3 py-1"
+                onClick={() => setEditEmail(!editEmail)}
+              >
+                <FontAwesomeIcon icon={icons.back} />
+                Back
+              </button>
+            </div>
+          ) : (
+            <div className="flex lg:gap-20">
+              <div className="flex flex-col lg:flex-row">
+                <div className=" lg:w-[400px]">
+                  <UserData icon={icons.email} title="Email" value={auth.email} />
+                </div>
+                <div className="mt-3 flex flex-col lg:mt-0 lg:flex-row">
+                  <button
+                    onClick={() => setEditEmail(!editEmail)}
+                    className="btn-primary flex-center flex w-[70px] items-center gap-1 rounded-xl  py-3 text-sm font-semibold sm:text-base"
+                  >
+                    <FontAwesomeIcon icon={icons.editEmail} />
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div>
+        {' '}
+        {isMobile && (
+          <button
+            className=" mt-5 flex w-full items-center gap-2 rounded-xl p-4 text-red-500 transition-colors hover:bg-red-50"
+            onClick={() => setDeletePopupOpen(true)}
+          >
+            <FontAwesomeIcon icon={icons.trash} />
+            Delete your Account
+          </button>
         )}
+        <style>{`.active { color: #7050FF; }`}</style>
+        {deletePopupOpen && <DeleteModal setDeletePopupOpen={setDeletePopupOpen} />}
       </div>
     </div>
   );
