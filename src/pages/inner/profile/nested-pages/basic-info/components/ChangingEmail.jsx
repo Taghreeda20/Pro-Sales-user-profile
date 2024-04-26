@@ -72,50 +72,52 @@ export default function ChangingEmail() {
   }
 
   return verify ? (
-
-    <div className="flex gap-20">
-    <div className="flex lg:w-[400px]">
-      <UserData icon={icons.email} title="Email" />
-      <div className='ml-20 lg:w-[270px]'>
-      <InputField
-      className="text-center text-lg font-semibold placeholder:font-normal"
-      type="text"
-      value={code}
-      placeholder="Verification Code"
-      onChange={(e) => setCode(e.target.value)}
-      maxLength={6}
-      required
-      autoFocus
-    />      </div>
-    </div>
-    <div className='flex w-[75px] '>
-    <Form
-    onSubmit={handleVerfiySubmit}
-    loading={loading}
-    error={error}
-    submitLabel="Verify"
-    submitDisabled={!(code.length === 6) || loading}
-    className="w-full sm:mx-auto sm:w-[400px]"
-  >
-   
-  </Form>
-    </div>
-
-  </div>
-   
-  ) : (
-    <div className="flex  lg:gap-20">
-      <div className="flex lg:w-[400px]">
+    <div className="flex  lg:gap-20 lg:flex-row flex-col">
+      <div className="flex lg:w-[400px] ">
         <UserData icon={icons.email} title="Email" />
-        <div className='lg:ml-20 lg:w-[270px] w-[270px] ml-3'>
-          <InputField.Email value={email} onChange={(e) => setEmail(e.target.value)} isValid={isValidEmail} required />{' '}
+        <div className="lg:ml-20 lg:w-[270px] w-40 ml-11">
+          <InputField
+            className="text-center text-lg font-semibold placeholder:font-normal"
+            type="text"
+            value={code}
+            placeholder="Verification Code"
+            onChange={(e) => setCode(e.target.value)}
+            maxLength={6}
+            required
+            autoFocus
+            error={error}
+
+          />{' '}
         </div>
       </div>
-      <div className='flex lg:w-[75px] w-[120px] '>
+      <div className="flex w-[120px] lg:w-[75px] ">
+        <Form
+          onSubmit={handleVerfiySubmit}
+          loading={loading}
+          submitLabel="Verify"
+          submitDisabled={!(code.length === 6) || loading}
+          className="w-full sm:mx-auto sm:w-[400px]"
+        ></Form>
+      </div>
+    </div>
+  ) : (
+    <div className="flex flex-col lg:flex-row  lg:gap-20">
+      <div className="flex lg:w-[400px]">
+        <UserData icon={icons.email} title="Email" />
+        <div className="ml-3 w-[270px] lg:ml-16 lg:w-[275px]">
+          <InputField.Email
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            isValid={isValidEmail}
+            required
+            error={error}
+          />
+        </div>
+      </div>
+      <div className="flex w-[120px] lg:w-[75px] ">
         <Form
           onSubmit={handleEmailSubmit}
           loading={loading}
-          error={error}
           submitLabel="Update"
           submitDisabled={!isValidEmail || !email || loading}
           className=" sm:mx-auto sm:w-[400px]"

@@ -1,6 +1,7 @@
 import icons from '../../utils/faIcons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inputFieldsInstructions } from '../../utils/validation';
+import Alert from './Alert';
 
 /**
  * `InputField` is a general input field component that can be used for all types of inputs.
@@ -11,19 +12,21 @@ import { inputFieldsInstructions } from '../../utils/validation';
  * @param {Object} props.icon - The Font Awesome icon to be displayed before the input field.
  * @param {boolean} props.isValid - Indicates the validation status of the input field. If `false`, the `instructions` text is displayed as an error message.
  * @param {string} props.instructions - The validation error message to be displayed when `isValid` is `false`.
+ * @param {string} props.error - An error message to display. If truthy, an `ErrorAlert` is displayed with this message.
  * @returns {ReactElement} A div element that wraps the input field and the validation error message.
  */
 
-function InputField({ icon, value, isValid, instructions, className = '', ...rest }) {
+function InputField({ icon, value, error, isValid, instructions, className = '', ...rest }) {
   return (
     <div className="w-full">
-      <div className="flex items-center overflow-hidden rounded-xl bg-gray-100">
+      <div className="flex items-center overflow-hidden rounded-xl bg-gray-100 ">
         {icon && (
           <FontAwesomeIcon
             icon={icon}
             className={(value && isValid ? 'text-pro-300' : 'text-gray-500') + ' pl-3 transition-colors duration-1000'}
           />
         )}
+
         <input
           className={'flex-1 bg-inherit p-3 text-gray-800 outline-none placeholder:text-gray-500 ' + className}
           value={value}
@@ -31,12 +34,14 @@ function InputField({ icon, value, isValid, instructions, className = '', ...res
           {...rest}
         />
       </div>
+
       {isValid !== undefined && value && !isValid && (
         <div className="flex flex-col gap-1 py-1">
           <div className="h-[3px] animate-progress-fast rounded bg-red-500"></div>
           <div className="animate-fade-in-fast text-sm text-red-500">{instructions}</div>
         </div>
       )}
+      <div className="mt-1"> {error && <Alert.Error message={error} />}</div>
     </div>
   );
 }

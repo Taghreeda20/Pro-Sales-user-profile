@@ -37,7 +37,7 @@ export default function BasicInfoPage() {
       <h1 className="mb-5 text-2xl font-bold lg:mb-12">Profile</h1>
 
       <div>
-        <div>
+        <div >
           {editName ? (
             <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
               <ChangingName />
@@ -73,7 +73,7 @@ export default function BasicInfoPage() {
           )}
         </div>
 
-        <div className="mt-5">
+        <div className="mt-10">
           {editUserName ? (
             <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
               <ChangingUsername />
@@ -104,7 +104,7 @@ export default function BasicInfoPage() {
           )}
         </div>
 
-        <div className="mt-5">
+        <div className="mt-10">
           {editEmail ? (
             <div className="flex flex-col gap-1 lg:w-[500px] lg:gap-1">
               <ChangingEmail />
@@ -118,11 +118,11 @@ export default function BasicInfoPage() {
             </div>
           ) : (
             <div className="flex lg:gap-20">
-              <div className="flex flex-col lg:flex-row">
-                <div className=" lg:w-[400px]">
+              <div className="flex flex-col lg:flex-row lg:gap-20">
+                <div className=" lg:w-[400px] w-[320px]">
                   <UserData icon={icons.email} title="Email" value={auth.email} />
                 </div>
-                <div className="mt-3 flex flex-col lg:mt-0 lg:flex-row">
+                <div className="mt-3 lg:mt-0 lg:w-0 ">
                   <button
                     onClick={() => setEditEmail(!editEmail)}
                     className="btn-primary flex-center flex w-[70px] items-center gap-1 rounded-xl  py-3 text-sm font-semibold sm:text-base"

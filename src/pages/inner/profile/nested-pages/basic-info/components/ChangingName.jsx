@@ -60,6 +60,7 @@ export default function ChangingName() {
               onChange={(e) => setFirstName(e.target.value)}
               isValid={isValidFirstName}
               required
+
             />
           </div>
         </div>
@@ -71,15 +72,16 @@ export default function ChangingName() {
               onChange={(e) => setLastName(e.target.value)}
               isValid={isValidLastName}
               required
+              error={error}
+
             />
           </div>
         </div>
       </div>
-        <div className="flex lg:w-[75px] w-[80px]">
+        <div className="flex lg:w-[75px] w-[80px] lg:h-[80px]">
           <Form
             onSubmit={handleNameSubmit}
             loading={loading}
-            error={error}
             submitLabel="Update"
             submitDisabled={!isValidFirstName || !isValidLastName || loading}
             className="w-full sm:mx-auto sm:w-[400px]"

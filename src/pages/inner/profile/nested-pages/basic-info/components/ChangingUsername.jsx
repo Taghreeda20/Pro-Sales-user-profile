@@ -51,12 +51,14 @@ export default function ChangingUsername() {
     <div className="flex lg:gap-20 gap-1">
       <div className="flex lg:w-[400px]">
         <UserData icon={icons.username} title="Username" />
-        <div className="lg:ml-32 lg:w-[170px] w-[160px] ml-4">
+        <div className="lg:ml-28 lg:w-[190px] w-[160px] ml-4">
           <InputField.Username
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             isValid={isValidUsername}
             required
+            error={error}
+
           />{' '}
         </div>
       </div>
@@ -64,8 +66,7 @@ export default function ChangingUsername() {
         <Form
           onSubmit={handleUsernameSubmit}
           loading={loading}
-          error={error}
-          submitLabel="Update"
+x          submitLabel="Update"
           submitDisabled={!isValidUsername || !username || loading}
           className="w-full flex  sm:mx-auto sm:w-[400px]"
         ></Form>
